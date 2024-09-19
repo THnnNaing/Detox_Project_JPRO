@@ -160,7 +160,7 @@ public class Manage_Customer extends JFrame {
 		txtName = new JTextField();
 		txtName.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		txtName.setColumns(10);
-		txtName.setBounds(188, 229, 290, 26);
+		txtName.setBounds(189, 227, 290, 26);
 		contentPane.add(txtName);
 		
 		txtEmail = new JTextField();
@@ -357,10 +357,6 @@ public class Manage_Customer extends JFrame {
 		    		
 		    		try {
 						int id=new CRUD_Dao().addCustomer(s);
-//						String userN=txtuser.getText().trim();
-//						String pw=txtpassword.getText().trim();
-//						String cmf=txtconfirm.getText().trim();
-//						new CRUD_Dao().CreateAccount(new Account(userN,pw,id));
 
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
@@ -430,7 +426,7 @@ public class Manage_Customer extends JFrame {
 					
 			        
 //					 Edit_Customer editProductPanel = 
-					new Edit_Customer(s).setVisible(true);
+					//new Edit_Customer(s).setVisible(true);
 //				      contentPane.add(editProductPanel);
 //			       
 //				      setSize(527,738);
@@ -469,6 +465,7 @@ public class Manage_Customer extends JFrame {
 		            ex.printStackTrace();
 		            JOptionPane.showMessageDialog(null, "An error occurred while processing the data.");
 		        }
+				dispose();
 		    }
 
 				
@@ -492,7 +489,7 @@ public class Manage_Customer extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-				
+				dispose();
 				
 			}
 		});
@@ -537,7 +534,7 @@ public class Manage_Customer extends JFrame {
 		contentPane.add(btnClear);
 		
 		 dob = new JDateChooser();
-		dob.setBounds(175, 228, 289, 20);
+		dob.setBounds(189, 286, 289, 20);
 		contentPane.add(dob);
 		
 		

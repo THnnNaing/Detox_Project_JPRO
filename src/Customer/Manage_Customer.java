@@ -29,8 +29,13 @@ import javax.swing.JPasswordField;
 
 
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+
+import Admin.Staff_Dashboard;
+import Constructors.Staff;
+import javax.swing.ButtonGroup;
 
 public class Manage_Customer extends JFrame {
 
@@ -42,6 +47,9 @@ public class Manage_Customer extends JFrame {
 	private JTextField txtEmail;
 	private JTextField txtSearch;
 	private JTable table;
+	private final ButtonGroup btnGender = new ButtonGroup();
+	private JRadioButton rdoFemale, rdoMale;
+	private JDateChooser dateChooser;
 
 	/**
 	 * Launch the application.
@@ -50,7 +58,7 @@ public class Manage_Customer extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Manage_Customer frame = new Manage_Customer();
+					Manage_Customer frame = new Manage_Customer(new Staff());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,7 +70,7 @@ public class Manage_Customer extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Manage_Customer() {
+	public Manage_Customer(Staff s) {
 		setTitle("VITALSIP Detox Juice");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Manage_Customer.class.getResource("/image/Logo-removebg-preview.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,13 +102,15 @@ public class Manage_Customer extends JFrame {
 		lblPhoneNo.setBounds(20, 328, 169, 28);
 		contentPane.add(lblPhoneNo);
 		
-		JRadioButton rdoMale = new JRadioButton("Male");
+		rdoMale = new JRadioButton("Male");
+		btnGender.add(rdoMale);
 		rdoMale.setBackground(UIManager.getColor("Button.light"));
 		rdoMale.setFont(new Font("Mongolian Baiti", Font.PLAIN, 16));
 		rdoMale.setBounds(175, 281, 74, 21);
 		contentPane.add(rdoMale);
 		
-		JRadioButton rdoFemale = new JRadioButton("Female");
+		rdoFemale = new JRadioButton("Female");
+		btnGender.add(rdoFemale);
 		rdoFemale.setBackground(UIManager.getColor("Button.light"));
 		rdoFemale.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		rdoFemale.setBounds(261, 281, 103, 21);
@@ -201,7 +211,7 @@ public class Manage_Customer extends JFrame {
 		lblNewLabel.setForeground(Color.BLACK);
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		lblNewLabel.setBackground(Color.BLACK);
-		lblNewLabel.setBounds(10, 79, 1275, 43);
+		lblNewLabel.setBounds(39, 79, 1137, 43);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblDob = new JLabel("DOB            :");
@@ -239,7 +249,14 @@ public class Manage_Customer extends JFrame {
 		btnView.setForeground(new Color(0, 0, 0));
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				try {
+					new View_Customer(s).setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				dispose();
+				setVisible(false);
 			}
 		});
 		
@@ -251,6 +268,17 @@ public class Manage_Customer extends JFrame {
 		contentPane.add(btnView);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new Staff_Dashboard(s).setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				dispose();
+			}
+		});
 		btnBack.setIcon(new ImageIcon(Manage_Customer.class.getResource("/image/back.png")));
 		btnBack.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
 		btnBack.setBackground(new Color(50, 205, 50));
@@ -258,16 +286,30 @@ public class Manage_Customer extends JFrame {
 		contentPane.add(btnBack);
 		
 		JButton btnClear = new JButton("Clear");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Clear();
+			}
+		});
 		btnClear.setIcon(new ImageIcon(Manage_Customer.class.getResource("/image/clear-format.png")));
 		btnClear.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
 		btnClear.setBackground(new Color(50, 205, 50));
 		btnClear.setBounds(353, 650, 111, 33);
 		contentPane.add(btnClear);
 		
-		JDateChooser dateChooser = new JDateChooser();
+		 dateChooser = new JDateChooser();
 		dateChooser.setBounds(175, 241, 289, 23);
 		contentPane.add(dateChooser);
 		
+		
+	}
+	public void Clear() {
+		txtName.setText("");
+		btnGender.clearSelection();
+		txtPhno.setText("");
+		txtAddress.setText("");
+		txtEmail.setText("");
+		dateChooser.setDate(null);
 		
 	}
 }

@@ -113,7 +113,6 @@ String ImgPath=null;
 		panel.add(lblNewLabel_1);
 		
 		JButton btnBack = new JButton("Back");
-		btnBack.setIcon(new ImageIcon(Edit_Product.class.getResource("/Image/back.png")));
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -137,86 +136,151 @@ String ImgPath=null;
 		add(btnBack);
 		
 		JButton btnUpdate = new JButton("Update");
-		btnUpdate.setIcon(new ImageIcon(Edit_Product.class.getResource("/Image/folder-upload.png")));
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				 String status = "";
-	                if (btnOn.isSelected()) {
-	                    status = "on";
-	                } else if (btnOff.isSelected()) {
-	                    status = "off";
+//		btnUpdate.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				 String status = "";
+//	                if (btnOn.isSelected()) {
+//	                    status = "on";
+//	                } else if (btnOff.isSelected()) {
+//	                    status = "off";
+//	                }
+//				
+//				try {
+//					
+//					int pid=Integer.parseInt(txtID.getText());
+//				String name = txtPname.getText().trim();
+//			        
+//			        JComboBox<String> comboBox = new JComboBox<>();
+//			        String size = cboSize.getSelectedItem().toString();
+//			        comboBox.addItem(size);
+//			        
+//			        ImageIcon imageIcon = (ImageIcon) lblimage.getIcon();
+//			        byte[] imageData = imageIconToByteArray(imageIcon);
+//	                
+//			        int qty = Integer.parseInt(txtQuantity.getText().trim());
+//			        int price = Integer.parseInt(txtPrice.getText().trim());
+//			        String ingre = txtIngredients.getText().trim();
+//			        String desc = txtDescription.getText().trim();
+//			       
+//
+//			        Product product = new Product(name, price, desc, imageData, size, ingre, qty,status);
+//			        product.setDetoxID(pid);
+//			        
+//			        if (btnOn.isEnabled()||btnOff.isEnabled()) {
+//			        try {
+//			            
+//			            int id = new CRUD_Dao().updateProduct(product);
+//			            if (id > 0) {
+//			                JOptionPane.showMessageDialog(null, "Update Successful");
+//			                Clear();
+//			                
+//			                
+//			                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(Edit_Product.this);
+//			                
+//			                parentFrame.dispose();  // This will close the current window
+//
+//			               
+//			                Product_Manage productManageFrame = new Product_Manage(s);
+//			                productManageFrame.setVisible(true);
+//			                
+//			                
+//			            } else {
+//			                JOptionPane.showMessageDialog(null, "Update failed. Please try again.");
+//			            }
+//			        } catch (NumberFormatException ex) {
+//			            // Handle the case where input is not a valid number
+//			            JOptionPane.showMessageDialog(null, "Please enter valid numbers for ID, quantity, and price.");
+//			        }
+//			        } 
+//				}catch (SQLException e1) {
+//			            e1.printStackTrace();
+//			            JOptionPane.showMessageDialog(null, "An error occurred while updating the record.");
+//			        }
+//					
+//				 try {
+//					 
+//					updateUIBasedOnStatus(status);
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				
+//				
+//			
+	btnUpdate.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+	        String status = "";
+	        if (btnOn.isSelected()) {
+	            status = "on";
+	        } else if (btnOff.isSelected()) {
+	            status = "off";
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Please select a status (on/off).");
+	            return; // Exit the method if no button is selected
+	        }
+
+	        try {
+	            int pid = Integer.parseInt(txtID.getText());
+	            
+	            // Check current product status before allowing updates
+	            String currentStatus = new CRUD_Dao().getProductStatus(pid);
+	            if ("off".equals(currentStatus) && "on".equals(status)) {
+	                // Allow updates if turning on, but notify the user
+	                JOptionPane.showMessageDialog(null, "You are reactivating this product.");
+	            } else if ("off".equals(currentStatus) && "off".equals(status)) {
+	                // Prevent updates if the product is already inactive
+	                JOptionPane.showMessageDialog(null, "This product is already inactive.");
+	                return; // Exit if the product is inactive
+	            }
+
+	            String name = txtPname.getText().trim();
+	            String size = cboSize.getSelectedItem().toString();
+	            ImageIcon imageIcon = (ImageIcon) lblimage.getIcon();
+	            byte[] imageData = imageIconToByteArray(imageIcon);
+	            int qty = Integer.parseInt(txtQuantity.getText().trim());
+	            int price = Integer.parseInt(txtPrice.getText().trim());
+	            String ingre = txtIngredients.getText().trim();
+	            String desc = txtDescription.getText().trim();
+
+	            // Create Product object
+	            Product product = new Product(name, price, desc, imageData, size, ingre, qty, status);
+	            product.setDetoxID(pid);
+
+	            // Update the product information
+	            int id = new CRUD_Dao().updateProduct(product);
+	            if (id > 0) {
+	                // Update the product status
+	                int statusUpdate = new CRUD_Dao().updateProductStatus(pid, status);
+	                if (statusUpdate > 0) {
+	                    JOptionPane.showMessageDialog(null, "Update Successful");
+	                    Clear();
+
+	                    // Close current window and open product management
+	                    JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(Edit_Product.this);
+	                    parentFrame.dispose();
+
+	                    Product_Manage productManageFrame = new Product_Manage(s);
+	                    productManageFrame.setVisible(true);
+	                } else {
+	                    JOptionPane.showMessageDialog(null, "Status update failed. Please try again.");
 	                }
-				
-				try {
-					
-					int pid=Integer.parseInt(txtID.getText());
-				String name = txtPname.getText().trim();
-			        
-			        JComboBox<String> comboBox = new JComboBox<>();
-			        String size = cboSize.getSelectedItem().toString();
-			        comboBox.addItem(size);
-			        
-			        ImageIcon imageIcon = (ImageIcon) lblimage.getIcon();
-			        byte[] imageData = imageIconToByteArray(imageIcon);
-	                
-			        int qty = Integer.parseInt(txtQuantity.getText().trim());
-			        int price = Integer.parseInt(txtPrice.getText().trim());
-			        String ingre = txtIngredients.getText().trim();
-			        String desc = txtDescription.getText().trim();
-			       
+	            } else {
+	                JOptionPane.showMessageDialog(null, "Product update failed. Please try again.");
+	            }
+	        } catch (NumberFormatException ex) {
+	            JOptionPane.showMessageDialog(null, "Please enter valid numbers for ID, quantity, and price.");
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	            JOptionPane.showMessageDialog(null, "An error occurred while updating the record.");
+	        }
+	    }
+	});
 
-			        Product product = new Product(name, price, desc, imageData, size, ingre, qty,status);
-			        product.setDetoxID(pid);
-			        
-			        if (btnOn.isEnabled()||btnOff.isEnabled()) {
-			        try {
-			            
-			            int id = new CRUD_Dao().updateProduct(product);
-			            if (id > 0) {
-			                JOptionPane.showMessageDialog(null, "Update Successful");
-			                Clear();
-			                
-			                
-			                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(Edit_Product.this);
-			                
-			                parentFrame.dispose();  // This will close the current window
-
-			               
-			                Product_Manage productManageFrame = new Product_Manage(s);
-			                productManageFrame.setVisible(true);
-			                
-			                
-			            } else {
-			                JOptionPane.showMessageDialog(null, "Update failed. Please try again.");
-			            }
-			        } catch (NumberFormatException ex) {
-			            // Handle the case where input is not a valid number
-			            JOptionPane.showMessageDialog(null, "Please enter valid numbers for ID, quantity, and price.");
-			        }
-			        } 
-				}catch (SQLException e1) {
-			            e1.printStackTrace();
-			            JOptionPane.showMessageDialog(null, "An error occurred while updating the record.");
-			        }
-					
-				 try {
-					 
-					updateUIBasedOnStatus(status);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				
-			
-			
-			}
-		});
 		//btnUpdate.setIcon(new ImageIcon(Edit_Product.class.getResource("/image/image/editor.png")));
 		btnUpdate.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
 		btnUpdate.setBackground(new Color(50, 205, 50));
-		btnUpdate.setBounds(408, 679, 109, 33);
+		btnUpdate.setBounds(409, 651, 109, 33);
 		add(btnUpdate);
 		
 		JLabel lblImage = new JLabel("Image                :");
@@ -232,64 +296,64 @@ String ImgPath=null;
 		JLabel lblStaffProfile = new JLabel("Edit Product");
 		lblStaffProfile.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStaffProfile.setForeground(Color.BLACK);
-		lblStaffProfile.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblStaffProfile.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
 		lblStaffProfile.setBackground(Color.LIGHT_GRAY);
 		lblStaffProfile.setBounds(0, 115, 530, 44);
 		add(lblStaffProfile);
 		
 		JLabel lblProductname = new JLabel("Product Name  :");
 		lblProductname.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblProductname.setBounds(59, 304, 129, 28);
+		lblProductname.setBounds(59, 279, 129, 28);
 		add(lblProductname);
 		
 		txtPname = new JTextField();
-		txtPname.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtPname.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtPname.setColumns(10);
-		txtPname.setBounds(197, 306, 268, 26);
+		txtPname.setBounds(197, 281, 268, 26);
 		add(txtPname);
 		
-		JLabel lblSize = new JLabel("Size                   :");
+		JLabel lblSize = new JLabel("Size                   ;");
 		lblSize.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblSize.setBounds(59, 342, 129, 28);
+		lblSize.setBounds(59, 317, 129, 28);
 		add(lblSize);
 		
 		 cboSize = new JComboBox();
-		 cboSize.setModel(new DefaultComboBoxModel(new String[] {"None", "200ml", " 100ml", "300ml ", "400ml", "500ml", "600ml", "700ml", "800ml", "900ml", "1liter", "2liter", "3liter"}));
-		cboSize.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		 cboSize.setModel(new DefaultComboBoxModel(new String[] {"Non", "200ml", " 100ml", "300ml ", "400ml", "500ml", "600ml", "700ml", "800ml", "900ml", "1liter", "2liter", "3liter"}));
+		cboSize.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		cboSize.setBackground(UIManager.getColor("Button.light"));
-		cboSize.setBounds(197, 343, 268, 28);
+		cboSize.setBounds(197, 322, 268, 28);
 		add(cboSize);
 		
 		JLabel lblPrice = new JLabel("Price                  :");
 		lblPrice.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblPrice.setBounds(59, 385, 129, 28);
+		lblPrice.setBounds(59, 369, 129, 28);
 		add(lblPrice);
 		
-		JLabel lblQuantity = new JLabel("Quantity           : ");
+		JLabel lblQuantity = new JLabel("Quantity            : ");
 		lblQuantity.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblQuantity.setBounds(59, 437, 129, 28);
+		lblQuantity.setBounds(59, 407, 129, 28);
 		add(lblQuantity);
 		
 		txtPrice = new JTextField();
-		txtPrice.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtPrice.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtPrice.setColumns(10);
-		txtPrice.setBounds(197, 387, 268, 26);
+		txtPrice.setBounds(197, 371, 268, 26);
 		add(txtPrice);
 		
 		txtQuantity = new JTextField();
-		txtQuantity.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtQuantity.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtQuantity.setColumns(10);
-		txtQuantity.setBounds(197, 439, 268, 26);
+		txtQuantity.setBounds(197, 409, 268, 26);
 		add(txtQuantity);
 		
 		JLabel lblIntegredients = new JLabel("Ingredients      :");
 		lblIntegredients.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblIntegredients.setBounds(59, 491, 129, 28);
+		lblIntegredients.setBounds(59, 461, 129, 28);
 		add(lblIntegredients);
 		
 		JLabel lblDescription = new JLabel("Description      :");
 		lblDescription.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblDescription.setBounds(59, 572, 129, 28);
+		lblDescription.setBounds(59, 538, 129, 28);
 		add(lblDescription);
 		
 		JButton btnBrowse = new JButton("Browse");
@@ -331,12 +395,12 @@ String ImgPath=null;
 		btnStatus.add(btnOn);
 		btnOn.setBackground(UIManager.getColor("Button.light"));
 		btnOn.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		btnOn.setBounds(197, 646, 71, 21);
+		btnOn.setBounds(197, 614, 71, 21);
 		add(btnOn);
 		
 		JLabel lblStatus = new JLabel("Status                : ");
 		lblStatus.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblStatus.setBounds(59, 640, 129, 28);
+		lblStatus.setBounds(59, 614, 129, 28);
 		add(lblStatus);
 		
 
@@ -349,28 +413,28 @@ String ImgPath=null;
 		btnStatus.add(btnOff);
 		btnOff.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		btnOff.setBackground(UIManager.getColor("Button.light"));
-		btnOff.setBounds(270, 647, 104, 21);
+		btnOff.setBounds(270, 615, 104, 21);
 		add(btnOff);
 		
 		 txtIngredients = new JTextArea();
-		txtIngredients.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		txtIngredients.setBounds(197, 494, 268, 55);
+		txtIngredients.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
+		txtIngredients.setBounds(197, 464, 268, 55);
 		add(txtIngredients);
 		
 		 txtDescription = new JTextArea();
-		txtDescription.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		txtDescription.setBounds(197, 575, 268, 55);
+		txtDescription.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
+		txtDescription.setBounds(197, 541, 268, 55);
 		add(txtDescription);
 		
 		txtID = new JTextField();
-		txtID.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtID.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtID.setColumns(10);
-		txtID.setBounds(197, 268, 268, 26);
+		txtID.setBounds(197, 252, 268, 26);
 		add(txtID);
 		
 		JLabel lblId = new JLabel("ID  :");
 		lblId.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblId.setBounds(59, 265, 129, 28);
+		lblId.setBounds(59, 250, 129, 28);
 		add(lblId);
 
 	}

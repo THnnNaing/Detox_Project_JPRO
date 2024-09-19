@@ -32,12 +32,10 @@ public class Staff_Profile extends JFrame {
 	private static final long serialVersionUID = 1L;
 	 private JPanel contentPane;
 	private JTextField txtName;
-	private JTextField txtn;
 	private JTextField txtnrc;
 	private JTextField txtPhno;
 	private JTextField txtAddress;
 	private JTextField txtEmail;
-	private JComboBox cboNrc,cboNrcR;
 	private JDateChooser dateChooser;
 	private JRadioButton rdoMale,rdoFemale;
 	/**
@@ -106,29 +104,10 @@ public class Staff_Profile extends JFrame {
 		lblNrc.setBounds(33, 263, 126, 28);
 		getContentPane().add(lblNrc);
 		
-		 cboNrc = new JComboBox();
-		cboNrc.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		cboNrc.setBackground(UIManager.getColor("Button.light"));
-		cboNrc.setBounds(187, 265, 58, 28);
-		getContentPane().add(cboNrc);
-		
-		 cboNrcR = new JComboBox();
-		cboNrcR.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		cboNrcR.setBackground(UIManager.getColor("Button.light"));
-		cboNrcR.setBounds(246, 265, 97, 28);
-		getContentPane().add(cboNrcR);
-		
-		txtn = new JTextField();
-		txtn.setText(" (N)");
-		txtn.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		txtn.setColumns(10);
-		txtn.setBounds(347, 266, 35, 28);
-		getContentPane().add(txtn);
-		
 		txtnrc = new JTextField();
 		txtnrc.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		txtnrc.setColumns(10);
-		txtnrc.setBounds(386, 266, 91, 26);
+		txtnrc.setBounds(187, 266, 290, 26);
 		getContentPane().add(txtnrc);
 		
 		JLabel lblGender = new JLabel("Gender        :");
@@ -191,6 +170,7 @@ public class Staff_Profile extends JFrame {
 					e1.printStackTrace();
 				}
 				dispose();
+				setVisible(false);
 			}
 		});
 		btnBack.setIcon(new ImageIcon(View_ManageStaff.class.getResource("/image/back.png")));
@@ -229,9 +209,11 @@ public class Staff_Profile extends JFrame {
 			
 	        txtName.setText(s.getName());
 	        dateChooser.setDate(s.getDob()); 
-	        cboNrc.setSelectedItem(s.getNRC()); 
-	        cboNrcR.setSelectedItem(s.getNRC()); 
+//	        cboNrc.setSelectedItem(s.getNRC()); 
+//	        cboNrcR.setSelectedItem(s.getNRC()); 
 	        txtnrc.setText(s.getNRC()); 
+//	        String nrc = cboNrc.getSelectedItem().toString() + "/" + cboNrcR.getSelectedItem().toString() + "("
+//                    + txtn.getText().trim() + ")" + txtnrc.getText().trim();
 	        rdoMale.setSelected(s.getGender().equals("Male")); 
 	        rdoFemale.setSelected(s.getGender().equals("Female")); 
 	        txtPhno.setText(s.getPhno()); 

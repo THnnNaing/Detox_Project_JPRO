@@ -52,6 +52,28 @@ public class CRUD_Dao {
 		pst.close();
 		return id;
 	}
+	
+	public int updateProductStatus(int productId, String status) throws SQLException {
+        String sql = "UPDATE detox SET status = ? WHERE detoxID = ?";
+        try (PreparedStatement pst = con.prepareStatement(sql)) {
+            pst.setString(1, status);
+            pst.setInt(2, productId);
+            return pst.executeUpdate();
+        }
+    }
+	
+	 public String getProductStatus(int productId) throws SQLException {
+	        String status = null;
+	        String sql = "SELECT status FROM detox WHERE detoxID = ?";
+	        try (PreparedStatement pst = con.prepareStatement(sql)) {
+	            pst.setInt(1, productId);
+	            ResultSet rs = pst.executeQuery();
+	            if (rs.next()) {
+	                status = rs.getString("status");
+	            }
+	        }
+	        return status;
+	    }
 
 	// Update account query
 	public int updateAccount(Account a) throws SQLException {

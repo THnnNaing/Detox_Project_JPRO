@@ -75,8 +75,13 @@ String ImgPath=null;
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(81, 192, 61));
-		panel.setBounds(0, 0, 530, 55);
+		panel.setBounds(0, 0, 530, 62);
 		add(panel);
+		
+		JLabel lblAdminDashboard = new JLabel("Vitalsip Detox Juice\r\n ");
+		lblAdminDashboard.setFont(new Font("Times New Roman", Font.BOLD, 29));
+		lblAdminDashboard.setBounds(10, 0, 263, 62);
+		panel.add(lblAdminDashboard);
 		
 		JLabel lblAdmin = new JLabel("Admin ");
 		lblAdmin.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -87,21 +92,15 @@ String ImgPath=null;
 		lblNewLabel_1.setBounds(1179, 10, 63, 42);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblAdminDashboard = new JLabel("Vitalsip Detox Juice");
-		lblAdminDashboard.setFont(new Font("Times New Roman", Font.BOLD, 25));
-		lblAdminDashboard.setBounds(0, 5, 486, 49);
-		panel.add(lblAdminDashboard);
-		
-		JLabel lblStaffProfile = new JLabel(" View Product");
+		JLabel lblStaffProfile = new JLabel("Product View");
 		lblStaffProfile.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStaffProfile.setForeground(Color.BLACK);
-		lblStaffProfile.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblStaffProfile.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
 		lblStaffProfile.setBackground(Color.LIGHT_GRAY);
 		lblStaffProfile.setBounds(0, 118, 530, 44);
 		add(lblStaffProfile);
 		
 		JButton btnBack = new JButton("Back");
-		btnBack.setIcon(new ImageIcon(View_Product.class.getResource("/Image/back.png")));
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -128,7 +127,7 @@ String ImgPath=null;
 		add(lblProductname);
 		
 		txtPname = new JTextField();
-		txtPname.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtPname.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtPname.setColumns(10);
 		txtPname.setBounds(197, 284, 268, 26);
 		add(txtPname);
@@ -139,14 +138,14 @@ String ImgPath=null;
 		add(lblSize);
 		
 		 cboSize = new JComboBox();
-		 cboSize.setModel(new DefaultComboBoxModel(new String[] {"None", "200ml", " 100ml", "300ml ", "400ml", "500ml", "600ml", "700ml", "800ml", "900ml", "1liter", "2liter", "3liter"}));
-		cboSize.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		 cboSize.setModel(new DefaultComboBoxModel(new String[] {"Non", "200ml", " 100ml", "300ml ", "400ml", "500ml", "600ml", "700ml", "800ml", "900ml", "1liter", "2liter", "3liter"}));
+		cboSize.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		cboSize.setBackground(UIManager.getColor("Button.light"));
 		cboSize.setBounds(197, 325, 268, 28);
 		add(cboSize);
 		
 		txtPrice = new JTextField();
-		txtPrice.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtPrice.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtPrice.setColumns(10);
 		txtPrice.setBounds(197, 374, 268, 26);
 		add(txtPrice);
@@ -169,33 +168,33 @@ String ImgPath=null;
 		
 		JLabel lblIntegredients = new JLabel("Ingredients      :");
 		lblIntegredients.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblIntegredients.setBounds(59, 475, 129, 28);
+		lblIntegredients.setBounds(59, 464, 129, 28);
 		add(lblIntegredients);
 		
 		JLabel lblDescription = new JLabel("Description      :");
 		lblDescription.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblDescription.setBounds(59, 557, 129, 28);
+		lblDescription.setBounds(59, 541, 129, 28);
 		add(lblDescription);
 		
 		JLabel lblQuantity = new JLabel("Quantity            : ");
 		lblQuantity.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblQuantity.setBounds(59, 421, 129, 28);
+		lblQuantity.setBounds(59, 410, 129, 28);
 		add(lblQuantity);
 		
 		txtQuantity = new JTextField();
-		txtQuantity.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtQuantity.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtQuantity.setColumns(10);
-		txtQuantity.setBounds(197, 423, 268, 26);
+		txtQuantity.setBounds(197, 412, 268, 26);
 		add(txtQuantity);
 		
 		 txtIngredients = new JTextArea();
-		txtIngredients.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		txtIngredients.setBounds(197, 478, 268, 55);
+		txtIngredients.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
+		txtIngredients.setBounds(197, 467, 268, 55);
 		add(txtIngredients);
 		
 		 txtDescription = new JTextArea();
-		txtDescription.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		txtDescription.setBounds(197, 560, 268, 55);
+		txtDescription.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
+		txtDescription.setBounds(197, 544, 268, 55);
 		add(txtDescription);
 
 	}

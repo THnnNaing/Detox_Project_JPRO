@@ -130,18 +130,6 @@ public class View_ManageCustomer extends JPanel {
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(192, 493, 290, 26);
 		add(txtEmail);
-		
-		JLabel lblChangeYourPassword = new JLabel("If you want to change your password   --->\r\n");
-		lblChangeYourPassword.setForeground(Color.BLACK);
-		lblChangeYourPassword.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblChangeYourPassword.setBounds(38, 552, 310, 28);
-		add(lblChangeYourPassword);
-		
-		JButton btnClickHere = new JButton("Click Here");
-		btnClickHere.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
-		btnClickHere.setBackground(new Color(50, 205, 50));
-		btnClickHere.setBounds(360, 550, 111, 33);
-		add(btnClickHere);
 
 	}
 }

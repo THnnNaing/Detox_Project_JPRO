@@ -117,7 +117,6 @@ String ImgPath=null;
 	 * @throws SQLException 
 	 */
 	public Product_Manage(Staff s) throws SQLException {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Product_Manage.class.getResource("/Image/Logo-removebg-preview.png")));
 		setTitle("VITALSIP Detox Juice");
 	//	setIconImage(Toolkit.getDefaultToolkit().getImage(Product_Manage.class.getResource("/image/Logo-removebg-preview.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -173,7 +172,6 @@ String ImgPath=null;
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
-		table.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -246,7 +244,6 @@ String ImgPath=null;
 		scrollPane.setViewportView(table);
 		
 		JButton btnSearch = new JButton("");
-		btnSearch.setIcon(new ImageIcon(Product_Manage.class.getResource("/Image/refresh-data.png")));
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -272,8 +269,8 @@ String ImgPath=null;
 		});
 		//btnSearch.setIcon(new ImageIcon(Product_Manage.class.getResource("/image/image/search.png")));
 		btnSearch.setFont(new Font("Monospaced", Font.PLAIN, 11));
-		btnSearch.setBackground(new Color(50, 205, 50));
-		btnSearch.setBounds(1247, 152, 36, 28);
+		btnSearch.setBackground(UIManager.getColor("Button.light"));
+		btnSearch.setBounds(1248, 152, 35, 25);
 		contentPane.add(btnSearch);
 		
 		JLabel lblProductname = new JLabel("Product Name  :");
@@ -282,13 +279,13 @@ String ImgPath=null;
 		contentPane.add(lblProductname);
 		
 		txtname = new JTextField();
-		txtname.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtname.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtname.setColumns(10);
 		txtname.setBounds(148, 294, 268, 26);
 		contentPane.add(txtname);
 		
 		txtQuantity = new JTextField();
-		txtQuantity.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtQuantity.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtQuantity.setColumns(10);
 		txtQuantity.setBounds(148, 434, 268, 26);
 		contentPane.add(txtQuantity);
@@ -299,7 +296,7 @@ String ImgPath=null;
 		contentPane.add(lblQuantity);
 		
 		txtPrice = new JTextField();
-		txtPrice.setFont(new Font("Mongolian Baiti", Font.PLAIN, 15));
+		txtPrice.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtPrice.setColumns(10);
 		txtPrice.setBounds(148, 387, 268, 26);
 		contentPane.add(txtPrice);
@@ -312,18 +309,19 @@ String ImgPath=null;
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(81, 192, 61));
-		panel.setBounds(-10, 0, 1326, 54);
+		panel.setBounds(-10, 0, 1326, 62);
 		contentPane.add(panel);
 		
-		JLabel lblAdminDashboard = new JLabel("Vitalsip Detox Juice");
-		lblAdminDashboard.setFont(new Font("Times New Roman", Font.BOLD, 25));
-		lblAdminDashboard.setBounds(10, 0, 486, 49);
+		JLabel lblAdminDashboard = new JLabel("Vitalsip Detox Juice\r\n ");
+		lblAdminDashboard.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAdminDashboard.setFont(new Font("Times New Roman", Font.BOLD, 29));
+		lblAdminDashboard.setBounds(23, 0, 263, 62);
 		panel.add(lblAdminDashboard);
 		
-		JLabel lblAdmin = new JLabel("Admin ");
-		lblAdmin.setIcon(new ImageIcon(Product_Manage.class.getResource("/Image/people icon.png")));
+		JLabel lblAdmin = new JLabel("Admin");
+		//lblAdmin.setIcon(new ImageIcon(Product_Manage.class.getResource("/image/image/people icon.png")));
 		lblAdmin.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		lblAdmin.setBounds(1231, 7, 95, 42);
+		lblAdmin.setBounds(1217, 13, 126, 42);
 		panel.add(lblAdmin);
 		
 		
@@ -339,8 +337,8 @@ String ImgPath=null;
 		contentPane.add(lblAddNewProduct);
 	
 		cboSize = new JComboBox();
-		cboSize.setModel(new DefaultComboBoxModel(new String[] {"None", "200ml", " 100ml", "300ml ", "400ml", "500ml", "600ml", "700ml", "800ml", "900ml", "1liter", "2liter", "3liter"}));
-		cboSize.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		cboSize.setModel(new DefaultComboBoxModel(new String[] {"Non", "200ml", " 100ml", "300ml ", "400ml", "500ml", "600ml", "700ml", "800ml", "900ml", "1liter", "2liter", "3liter"}));
+		cboSize.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		cboSize.setBackground(UIManager.getColor("Button.light"));
 		cboSize.setBounds(148, 335, 268, 28);
 		contentPane.add(cboSize);
@@ -356,7 +354,6 @@ String ImgPath=null;
 		contentPane.add(lblDescription);
 		
 		JButton btnEdit = new JButton("Clear");
-		btnEdit.setIcon(new ImageIcon(Product_Manage.class.getResource("/Image/clear-format.png")));
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -367,11 +364,10 @@ String ImgPath=null;
 		//btnEdit.setIcon(new ImageIcon(Product_Manage.class.getResource("/image/image/clear-format.png")));
 		btnEdit.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
 		btnEdit.setBackground(new Color(50, 205, 50));
-		btnEdit.setBounds(192, 647, 107, 33);
+		btnEdit.setBounds(309, 647, 107, 33);
 		contentPane.add(btnEdit);
 		
 		JButton btnView = new JButton("View");
-		btnView.setIcon(new ImageIcon(Product_Manage.class.getResource("/Image/view-grid-detail.png")));
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -393,6 +389,7 @@ String ImgPath=null;
 				viewProductPanel.setLocation(0,0);
 		        contentPane.repaint();
 		        contentPane.revalidate();
+		       
 		        
 		        new Product_Manage(s).setVisible(false);
 		        
@@ -456,7 +453,6 @@ String ImgPath=null;
 		contentPane.add(btnView);
 		
 		JButton btnEdit_1 = new JButton("Edit");
-		btnEdit_1.setIcon(new ImageIcon(Product_Manage.class.getResource("/Image/editor.png")));
 		btnEdit_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -499,7 +495,7 @@ String ImgPath=null;
 
 	                // Set product data in the edit panel
 	                editProductPanel.setProductData( name, price, desc, imageData, size, ingre, quantity);
-	               // p.fireTableDataChanged();
+		                
 	            }
 	        } catch (NumberFormatException ex) {
 	            JOptionPane.showMessageDialog(null, "Please enter valid numbers for quantity and price.");
@@ -523,7 +519,6 @@ String ImgPath=null;
 		contentPane.add(btnEdit_1);
 		
 		JButton btnDelete = new JButton("Delete");
-		btnDelete.setIcon(new ImageIcon(Product_Manage.class.getResource("/Image/delete.png")));
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -558,7 +553,7 @@ String ImgPath=null;
 			        }
 			        
 			        Clear(); 
-			        //p.fireTableDataChanged();
+				
 				
 			}
 		});
@@ -569,7 +564,6 @@ String ImgPath=null;
 		contentPane.add(btnDelete);
 		
 		JButton btnBack = new JButton("Back");
-		btnBack.setIcon(new ImageIcon(Product_Manage.class.getResource("/Image/back.png")));
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -578,6 +572,7 @@ String ImgPath=null;
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				 dispose();
 			}
 		});
 		//btnBack.setIcon(new ImageIcon(Product_Manage.class.getResource("/image/image/back.png")));
@@ -629,19 +624,18 @@ String ImgPath=null;
 		contentPane.add(btnBrowse);
 		
 		txtIngredients = new JTextField();
-		txtIngredients.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtIngredients.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtIngredients.setColumns(10);
 		txtIngredients.setBounds(148, 484, 268, 54);
 		contentPane.add(txtIngredients);
 		
 		txtDescription = new JTextField();
-		txtDescription.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
+		txtDescription.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		txtDescription.setColumns(10);
 		txtDescription.setBounds(148, 569, 268, 54);
 		contentPane.add(txtDescription);
 		
 		JButton btnSave = new JButton("Save");
-		btnSave.setIcon(new ImageIcon(Product_Manage.class.getResource("/Image/save.png")));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -697,7 +691,7 @@ String ImgPath=null;
 	            }
 	        
 
-				p.fireTableDataChanged();
+				
 			
 			
 				
@@ -706,13 +700,8 @@ String ImgPath=null;
 		//btnSave.setIcon(new ImageIcon(Product_Manage.class.getResource("/image/image/Savee.png")));
 		btnSave.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
 		btnSave.setBackground(new Color(50, 205, 50));
-		btnSave.setBounds(309, 647, 107, 33);
+		btnSave.setBounds(192, 647, 107, 33);
 		contentPane.add(btnSave);
-		
-		JLabel lblSearchHere = new JLabel("Search Here :");
-		lblSearchHere.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblSearchHere.setBounds(850, 150, 107, 28);
-		contentPane.add(lblSearchHere);
 		
 		
 	}

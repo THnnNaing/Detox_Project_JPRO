@@ -22,7 +22,6 @@ import com.toedter.calendar.JDateChooser;
 
 import Constructors.Customer;
 import Constructors.Staff;
-import Customer.Password_ChangeForAdmin;
 import Dao.CRUD_Dao;
 import DetoxProduct.Edit_Product;
 
@@ -142,7 +141,7 @@ public class Edit_Customer extends JFrame {
 		getContentPane().add(txtEmail);
 		
 		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener() {
+	btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
@@ -207,12 +206,12 @@ public class Edit_Customer extends JFrame {
 		                //Clear();
 		                
 		                
-		                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(Edit_Customer.this);
-		                
-		                parentFrame.dispose();  // This will close the current window
+//		                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(Edit_Customer.this);
+//		                
+//		                parentFrame.dispose();  // This will close the current window
 
-		               
-		                Product_Manage productManageFrame = new Product_Manage(s);
+		               dispose();
+		                Manage_Customer productManageFrame = new Manage_Customer(s);
 		                productManageFrame.setVisible(true);
 		                
 		                
@@ -235,32 +234,14 @@ public class Edit_Customer extends JFrame {
 		btnUpdate.setIcon(new ImageIcon(Edit_Customer.class.getResource("/image/folder-upload.png")));
 		btnUpdate.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
 		btnUpdate.setBackground(new Color(50, 205, 50));
-		btnUpdate.setBounds(411, 650, 109, 33);
+		btnUpdate.setBounds(377, 619, 126, 33);
 		getContentPane().add(btnUpdate);
 		
-		JLabel lblEditStaffProfile = new JLabel("Customer  Profile");
+		JLabel lblEditStaffProfile = new JLabel("Edit Customer Profile");
 		lblEditStaffProfile.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEditStaffProfile.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
 		lblEditStaffProfile.setBounds(33, 127, 444, 28);
 		getContentPane().add(lblEditStaffProfile);
-		
-		JLabel lblChangeYourPassword = new JLabel("If you want to change your password   --->\r\n");
-		lblChangeYourPassword.setForeground(Color.BLACK);
-		lblChangeYourPassword.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
-		lblChangeYourPassword.setBounds(33, 548, 310, 28);
-		getContentPane().add(lblChangeYourPassword);
-		
-		JButton btnClickHere = new JButton("Click Here");
-		btnClickHere.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new Password_ChangeForAdmin(s).setVisible(true);
-				setVisible(false);
-			}
-		});
-		btnClickHere.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
-		btnClickHere.setBackground(new Color(50, 205, 50));
-		btnClickHere.setBounds(355, 546, 111, 33);
-		getContentPane().add(btnClickHere);
 		
 		dob = new JDateChooser();
 		dob.setBounds(179, 250, 281, 20);

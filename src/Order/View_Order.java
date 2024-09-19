@@ -35,6 +35,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import Constructors.Order;
 import Constructors.Staff;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 public class View_Order extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -137,71 +139,14 @@ public class View_Order extends JFrame {
 		
 		table = new JTable();
 		table.setModel(otb);
-//		new DefaultTableModel(
-//			new Object[][] {
-//				{new Integer(1), "Myo Myo", "Aung Aung"},
-//				{new Integer(2), "Myo Myo", "Mya Mya"},
-//				{new Integer(3), "Myo Myo", "Ko Ko"},
-//				{new Integer(4), "Myo Myo", "Ko Ko"},
-//				{new Integer(5), "Myo Myo", "Ko Ko"},
-//				{new Integer(6), "Myo Myo", "Ko Ko"},
-//				{new Integer(7), "Myo Myo", "Ko Ko"},
-//				{new Integer(8), "Myo Myo", "Ko Ko"},
-//				{new Integer(9), "Myo Myo", "Ko Ko"},
-//				{new Integer(10), "Myo Myo", "Ko Ko"},
-//				{new Integer(11), "Myo Myo", "Ko Ko"},
-//				{new Integer(12), "Myo Myo", "Ko Ko"},
-//				{new Integer(13), "Myo Myo", "Ko Ko"},
-//				{new Integer(14), "Myo Myo", "Ko Ko"},
-//				{new Integer(15), "Myo Myo", "Ko Ko"},
-//				{new Integer(16), "Myo Myo", "Ko Ko"},
-//				{new Integer(17), "Myo Myo", "Ko Ko"},
-//				{new Integer(18), "Myo Myo", "Ko Ko"},
-//				{new Integer(19), "Myo Myo", "Ko Ko"},
-//				{new Integer(20), "Myo Myo", "Ko Ko"},
-//				{new Integer(21), "Myo Myo", "Ko Ko"},
-//				{new Integer(22), "Myo Myo", "Ko Ko"},
-//				{new Integer(23), "Myo Myo", "Ko Ko"},
-//				{new Integer(24), "Myo Myo", "Ko Ko"},
-//				{new Integer(25), "Myo Myo", "Ko Ko"},
-//				{new Integer(26), "Myo Myo", "Ko Ko"},
-//				{new Integer(27), "Myo Myo", "Ko Ko"},
-//				{new Integer(28), "Myo Myo", "Ko Ko"},
-//				{new Integer(29), "Myo Myo", "Ko Ko"},
-//				{new Integer(30), "Myo Myo", "Ko Ko"},
-//				{new Integer(31), "Myo Myo", "Ko Ko"},
-//				{new Integer(32), "Myo Myo", "Ko Ko"},
-//				{new Integer(33), "Myo Myo", "Ko Ko"},
-//				{new Integer(34), "Myo Myo", "Ko Ko"},
-//				{new Integer(35), "Myo Myo", "Ko Ko"},
-//				{new Integer(36), "Myo Myo", "Ko Ko"},
-//				{new Integer(37), "Myo Myo", "Ko Ko"},
-//				{new Integer(38), "Myo Myo", "Ko Ko"},
-//				{new Integer(39), "Soe Soe", "Mya Mya"},
-//				{new Integer(40), "Htun Htun", "Ko Ko"},
-//				{new Integer(41), "Lwin Mar Aung", "Ko Ko"},
-//				{new Integer(42), "Lwin Mar Aung", "Ko Ko"},
-//				{new Integer(43), "Lwin Mar Aung", "Ko Ko"},
-//				{new Integer(44), "Ei Sandar Kyaw", "Ko Ko"},
-//				{new Integer(45), "Ei Sandar Kyaw", "Ko Ko"},
-//			},
-//			new String[] {
-//				"A", "B", "C"
-//			}
-//		) {
-//			boolean[] columnEditables = new boolean[] {
-//				false, false, false
-//			};
-//			public boolean isCellEditable(int row, int column) {
-//				return columnEditables[column];
-//			}
-//		});
+
+
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(1).setPreferredWidth(120);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(2).setPreferredWidth(112);
-		table.setFont(new Font("Mongolian Baiti", Font.PLAIN, 21));
+		table.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		scrollPane.setViewportView(table);
 		
 		txtSearch = new JTextField();
@@ -239,51 +184,6 @@ public class View_Order extends JFrame {
 		btnSearch.setBackground(new Color(34, 139, 34));
 		btnSearch.setBounds(919, 141, 24, 25);
 		contentPane.add(btnSearch);
-		
-		JButton btnView = new JButton("View");
-		btnView.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				contentPane.removeAll();
-				
-		        
-		        In_vieworder viewProductPanel = null;
-		        try {
-					viewProductPanel = new In_vieworder(s);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				contentPane.add(viewProductPanel);
-				contentPane.add(viewProductPanel,BorderLayout.CENTER);
-		        
-				
-				viewProductPanel.setSize(580,620);
-				viewProductPanel.setLocation(0,0);
-		        contentPane.repaint();
-		        contentPane.revalidate();
-		        
-		        int selectedRow = table.getSelectedRow();
-				if(selectedRow != -1 ) {
-					
-					int id = (int) table.getValueAt(selectedRow, 0);
-					Order o=new Order();
-					int i=o.getOrderID();
-					try {
-						viewProductPanel.updateOrderDetails(id);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				
-				}
-				
-			}
-		});
-		//btnView.setIcon(new ImageIcon(View_Order.class.getResource("/image/image/view-grid-detail.png")));
-		btnView.setForeground(Color.BLACK);
-		btnView.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
-		btnView.setBackground(new Color(50, 205, 50));
-		btnView.setBounds(836, 649, 107, 33);
-		contentPane.add(btnView);
+		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{panel, lblAdminDashboard, lblNewLabel_1, lblAdmin, lblOrderList, btnBack, scrollPane, table, txtSearch, btnSearch}));
 	}
 }

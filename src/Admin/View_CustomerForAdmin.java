@@ -83,7 +83,7 @@ public class View_CustomerForAdmin extends JFrame {
 		lblCustomerList.setForeground(Color.BLACK);
 		lblCustomerList.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		lblCustomerList.setBackground(Color.BLACK);
-		lblCustomerList.setBounds(0, 100, 959, 43);
+		lblCustomerList.setBounds(48, 79, 777, 43);
 		contentPane.add(lblCustomerList);
 		
 		JScrollPane scrollPane = new JScrollPane();

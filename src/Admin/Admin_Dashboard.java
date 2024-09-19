@@ -155,7 +155,7 @@ public class Admin_Dashboard extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-					new View_Customer(s).setVisible(true);
+					new View_CustomerForAdmin(s).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

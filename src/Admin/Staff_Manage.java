@@ -2,7 +2,6 @@ package Admin;
 
 import java.awt.EventQueue;
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -87,7 +86,8 @@ public class Staff_Manage extends JFrame {
 	private JRadioButton rdoMale, rdoFemale;
 	private ArrayList<Staff> data = new ArrayList<Staff>();
 	private StaffTableModel staff;
-	private JLabel lblPassword,lblConfirmpsw, lblName, lblGender, lblNrc, lblAddress, lblPhoneNo, lblEmail, lblPosition;
+	private JLabel lblPassword, lblConfirmpsw, lblName, lblGender, lblNrc, lblAddress, lblPhoneNo, lblEmail,
+			lblPosition;
 
 	/**
 	 * Launch the application.
@@ -107,7 +107,8 @@ public class Staff_Manage extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws SQLException 
+	 * 
+	 * @throws SQLException
 	 */
 	public Staff_Manage(Staff s) throws SQLException {
 		setTitle("VITALSIP Detox Juice");
@@ -211,15 +212,15 @@ public class Staff_Manage extends JFrame {
 
 		cboPosition = new JComboBox();
 		cboPosition.setBackground(UIManager.getColor("Button.light"));
-		cboPosition.setModel(new DefaultComboBoxModel(new String[] {"None", "Admin", "Staff", "Customer", "Sale"}));
+		cboPosition.setModel(new DefaultComboBoxModel(new String[] { "None", "Admin", "Staff", "Customer", "Sale" }));
 		cboPosition.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		cboPosition.setBounds(174, 440, 290, 28);
 		contentPane.add(cboPosition);
 
-	 comboBox2 = new JComboBox<>();
+		comboBox2 = new JComboBox<>();
 		comboBox2.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				
+
 				String d1[] = { "BaMaNa", "KhaHpaNa", "DaHpaYa", "HaPaNa", "HpaKaNa", "AhGaYa", "KaMaNa", "KaMaTa",
 						"KaPaTa", "MaKhaBa", "MaSaNa", "MaKaTa", "MaNyaNa", "KhaLaHpa", "LaGaNa", "MaMaNa", "MaKaNa",
 						"MaLaNa", "NaMaNa", "PaWaNa", "PaNaDa", "PaTaAh", "PaTaAh", "SaDaNa", "YaBaYa", "YaKaNa",
@@ -278,10 +279,10 @@ public class Staff_Manage extends JFrame {
 						"KaKaHta", "KaLaNa", "KaKhaNa", "KaKaNa", "KaPaNa", "LaPaTa", "LaMaNa", "MaAhNa", "MaMaNa",
 						"NgaPaTa", "NgaThaKha", "NgaYaKa", "NgaSaNa", "NgaThaYa", "NyaTaNa", "PaTaNa", "PaThaNa",
 						"HpaPaNa", "PaSaLa", "YaThaYa", "ThaPaNa", "WaKhaMa", "YaKaNa", "ZaLaNa", "PaThaYa" };
-				 comboBox1.removeAllItems();
+				comboBox1.removeAllItems();
 				if (comboBox2.getSelectedIndex() == 1) {
 					for (int i = 0; i < d1.length; i++)
-						 comboBox1.addItem(d1[i]);
+						comboBox1.addItem(d1[i]);
 				} else {
 					if (comboBox2.getSelectedIndex() == 2) {
 						for (int i = 0; i < d2.length; i++)
@@ -350,11 +351,7 @@ public class Staff_Manage extends JFrame {
 					}
 				}
 			}
-				
-			
-			
-			
-			
+
 		});
 		comboBox2.setModel(new DefaultComboBoxModel(new String[] { "", "1/", "2/", "3/", "4/", "5/", "6/", "7/", "8/",
 				"9/", "10/", "11/", "12/", "13/", "14/" }));
@@ -381,7 +378,7 @@ public class Staff_Manage extends JFrame {
 		lblAdmin.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		lblAdmin.setBounds(1211, 5, 95, 42);
 		panel.add(lblAdmin);
-		
+
 		JLabel lblAdminDashboard = new JLabel("Vitalsip Detox Juice");
 		lblAdminDashboard.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		lblAdminDashboard.setBounds(0, 0, 486, 49);
@@ -392,21 +389,22 @@ public class Staff_Manage extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				try {
-					ArrayList<Staff>ur=new CRUD_Dao().AddStaffTable();
-					
-					
-					String keyword=txtSearch.getText().trim().toLowerCase();
+					ArrayList<Staff> ur = new CRUD_Dao().AddStaffTable();
+
+					String keyword = txtSearch.getText().trim().toLowerCase();
 					data.clear();
-					data.addAll((ArrayList<Staff>) ur.stream()
-							.filter(u ->u.getName().toLowerCase().contains(keyword)||u.getGender().toLowerCase().contains(keyword))
-							.collect(Collectors.toList()));
+					data.addAll(
+							(ArrayList<Staff>) ur.stream()
+									.filter(u -> u.getName().toLowerCase().contains(keyword)
+											|| u.getGender().toLowerCase().contains(keyword))
+									.collect(Collectors.toList()));
 					staff.fireTableDataChanged();
-					
+
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 			}
 		});
 		txtSearch.setFont(new Font("Monospaced", Font.PLAIN, 14));
@@ -425,85 +423,73 @@ public class Staff_Manage extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int selectedRow = table.getSelectedRow();
 
+				if (selectedRow != -1) {
+					int productId = (int) table.getValueAt(selectedRow, 0);
 
-		 		int selectedRow = table.getSelectedRow();
+					try {
+						Staff customer = new CRUD_Dao().getStaffrById(productId);
 
-		        if (selectedRow != -1) {
-		           
-		            int productId = (int) table.getValueAt(selectedRow, 0);
+						if (customer != null) {
 
-		            try {
-		               
-		               Staff customer = new CRUD_Dao().getStaffrById(productId);
+							txtName.setText(customer.getName());
+							txtEmail.setText(String.valueOf(customer.getEmail()));
 
-		                if (customer != null) {
-		                    // Populate the text fields and combo box with the product data
-		                    txtName.setText(customer.getName());
-		                    txtEmail.setText(String.valueOf(customer.getEmail()));
-		                   // Dob.setDate(customer.getDob());
-		                    
-		                    Date dob = customer.getDob();
-		                    if (dob != null) {
-		                        Dob.setDate(dob); 
-		                    } else {
-		                        Dob.setDate(null); 
-		                    }
-			        
-		                    if (customer.getGender().equalsIgnoreCase("Male")) {
-		                    	btnGender.setSelected(rdoMale.getModel(), true);
-		                    } else if (customer.getGender().equalsIgnoreCase("Female")) {
-		                    	btnGender.setSelected(rdoFemale.getModel(), true);
-		                    } else {
-		                    	btnGender.clearSelection(); // Clear if gender is not Male/Female
-		                    }
-		                    
-		                   
-		                    String position = customer.getPosition();
-		                    if (position != null) {
-		                        cboPosition.setSelectedItem(position); 
-		                    } else {
-		                        cboPosition.setSelectedItem("");
-		                    }
-					       // cboPosition.setSelectedItem(customer.getPosition());
-		                    txtAddress.setText(String.valueOf(customer.getAddress()));
-					        
-		                    txtPhno.setText(String.valueOf(customer.getPhno()));
-		                 
-		                    
-		                    JComboBox comboBox = comboBox2  ;  // Your JComboBox instance
-		                    Object selectedItem = comboBox.getSelectedItem();
+							Date dob = customer.getDob();
+							Dob.setDate(dob != null ? dob : null);
 
-		                    if (selectedItem != null) {
-		                        String selectedValue = selectedItem.toString();
-		                        // Proceed with using selectedValue
-		                    } else {
-		                        JOptionPane.showMessageDialog(null, "Please select an item from the dropdown.");
-		                    }
+							if (customer.getGender().equalsIgnoreCase("Male")) {
+								btnGender.setSelected(rdoMale.getModel(), true);
+							} else if (customer.getGender().equalsIgnoreCase("Female")) {
+								btnGender.setSelected(rdoFemale.getModel(), true);
+							} else {
+								btnGender.clearSelection();
+							}
 
-		                    
-		                    
-		                } else {
-		                    JOptionPane.showMessageDialog(null, "Product not found in the database.");
-		                }
+							String position = customer.getPosition();
+							cboPosition.setSelectedItem(position != null ? position : "");
 
-		            } catch (SQLException ex) {
-		                ex.printStackTrace();
-		                JOptionPane.showMessageDialog(null, "An error occurred while fetching product data.");
-		            }
+							txtAddress.setText(String.valueOf(customer.getAddress()));
+							txtPhno.setText(String.valueOf(customer.getPhno()));
 
-		        } else {
-		            System.out.println("No row is selected.");
-		        }
-		    }
+							String nrc = customer.getNRC();
+
+							Pattern pattern = Pattern.compile("(\\d{1,2})/(\\w+)(\\(N\\))?(\\d{6})");
+							Matcher matcher = pattern.matcher(nrc);
+
+							if (matcher.matches()) {
+								comboBox2.setSelectedItem(matcher.group(1) + "/");
+								comboBox1.removeAllItems();
+								String districtCode = matcher.group(2);
+
+								comboBox1.addItem(districtCode);
+//	                            txtn.setText(matcher.group(3) != null ? matcher.group(3).replaceAll("[()]", "") : ""); 
+								txtNrc.setText(matcher.group(4));
+							} else {
+								JOptionPane.showMessageDialog(null, "NRC format is incorrect.");
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "Product not found in the database.");
+						}
+
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+						JOptionPane.showMessageDialog(null, "An error occurred while fetching product data.");
+					}
+
+				} else {
+					System.out.println("No row is selected.");
+				}
+			}
 		});
 
 		// Fetch data and update the table
-		CRUD_Dao b=new CRUD_Dao();
-		data=new CRUD_Dao().AddStaffTable();
-		staff=new StaffTableModel(data);
-		
-				table.setModel(staff);
+		CRUD_Dao b = new CRUD_Dao();
+		data = new CRUD_Dao().AddStaffTable();
+		staff = new StaffTableModel(data);
+
+		table.setModel(staff);
 //				new DefaultTableModel(
 //					new Object[][] {
 //					},
@@ -518,13 +504,12 @@ public class Staff_Manage extends JFrame {
 //						return columnEditables[column];
 //					}
 //				});
-				table.getColumnModel().getColumn(0).setResizable(false);
-				table.getColumnModel().getColumn(2).setResizable(false);
-				table.getColumnModel().getColumn(4).setResizable(false);
-				//configureTable(table);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(4).setResizable(false);
+		// configureTable(table);
 
-			
-		 comboBox1 = new JComboBox<>();
+		comboBox1 = new JComboBox<>();
 		comboBox1.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		comboBox1.setBackground(UIManager.getColor("Button.light"));
 		comboBox1.setBounds(233, 229, 97, 28);
@@ -566,12 +551,12 @@ public class Staff_Manage extends JFrame {
 		lblCreateNewAccount.setBounds(10, 477, 186, 28);
 		contentPane.add(lblCreateNewAccount);
 
-		 lblPassword = new JLabel("Create password    :");
+		lblPassword = new JLabel("Create password    :");
 		lblPassword.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		lblPassword.setBounds(10, 548, 169, 28);
 		contentPane.add(lblPassword);
 
-		 lblConfirmpsw = new JLabel("Confirm password :");
+		lblConfirmpsw = new JLabel("Confirm password :");
 		lblConfirmpsw.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		lblConfirmpsw.setBounds(10, 587, 144, 28);
 		contentPane.add(lblConfirmpsw);
@@ -593,75 +578,73 @@ public class Staff_Manage extends JFrame {
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(checkInput()) {
-					
-				String name = txtName.getText().trim();
-				String gender = rdoMale.isSelected() ? "Male" : rdoFemale.isSelected() ? "Female" : "";
-				String nrc = comboBox2.getSelectedItem().toString() + comboBox1.getSelectedItem().toString() +txtn.getText().trim()
-						+ txtNrc.getText().trim();
-				String phoneNumber = txtPhno.getText().trim();
-				String address = txtAddress.getText().trim();
-				String email = txtEmail.getText().trim();
-				String password = txtpassword.getText().trim();
-				String confirmPassword = txtconfirm.getText().trim();
-				String username = txtUsername.getText().trim();
-				Date d=new Date(Dob.getDate().getTime());
-				 String position = cboPosition.getSelectedItem() != null ? cboPosition.getSelectedItem().toString() : "";
+				if (checkInput()) {
 
-				// Perform validations
-				if (!checkName(name)) {
-					showMessage(
-							"Invalid Name. Name must start with a letter and can only contain letters, numbers, and spaces.");
-					return;
-				}
+					String name = txtName.getText().trim();
+					String gender = rdoMale.isSelected() ? "Male" : rdoFemale.isSelected() ? "Female" : "";
+					String nrc = comboBox2.getSelectedItem().toString() + comboBox1.getSelectedItem().toString()
+							+ txtn.getText().trim() + txtNrc.getText().trim();
+					String phoneNumber = txtPhno.getText().trim();
+					String address = txtAddress.getText().trim();
+					String email = txtEmail.getText().trim();
+					String password = txtpassword.getText().trim();
+					String confirmPassword = txtconfirm.getText().trim();
+					String username = txtUsername.getText().trim();
+					Date d = new Date(Dob.getDate().getTime());
+					String position = cboPosition.getSelectedItem() != null ? cboPosition.getSelectedItem().toString()
+							: "";
 
-				if (!validatePhoneNumber(phoneNumber)) {
-					showMessage("Invalid Phone Number. Please enter a valid Myanmar phone number.");
-					return;
-				}
+					// Perform validations
+					if (!checkName(name)) {
+						showMessage(
+								"Invalid Name. Name must start with a letter and can only contain letters, numbers, and spaces.");
+						return;
+					}
 
-				if (!validateEmail(email)) {
-					showMessage("Invalid Email. Please enter a valid email address.");
-					return;
-				}
+					if (!validatePhoneNumber(phoneNumber)) {
+						showMessage("Invalid Phone Number. Please enter a valid Myanmar phone number.");
+						return;
+					}
 
-				if (!checkAddress()) {
-					showMessage("Address cannot be empty.");
-					return;
-				}
+					if (!validateEmail(email)) {
+						showMessage("Invalid Email. Please enter a valid email address.");
+						return;
+					}
 
-				// If all validations pass, save the data to the database
-				Staff staff = new Staff(); // Assuming you have a Staff class
-				staff.setName(name);
-				staff.setGender(gender);
-				staff.setNRC(nrc);
-				staff.setPhno(phoneNumber);
-				staff.setAddress(address);
-				staff.setEmail(email);
-				staff.setDob(d);
-				staff.setPosition(position);
-				
+					if (!checkAddress()) {
+						showMessage("Address cannot be empty.");
+						return;
+					}
 
-				try {
-					CRUD_Dao dao = new CRUD_Dao(); // Assuming you have a StaffDAO class for database operations
-					int id=dao.addStaff(staff); // Save the staff to the database
-					Account account = new Account();
-					account.setPassword(password);
-					account.setUsername(username);
-					account.setStaffID(id);
-					
+					// If all validations pass, save the data to the database
+					Staff staff = new Staff(); // Assuming you have a Staff class
+					staff.setName(name);
+					staff.setGender(gender);
+					staff.setNRC(nrc);
+					staff.setPhno(phoneNumber);
+					staff.setAddress(address);
+					staff.setEmail(email);
+					staff.setDob(d);
+					staff.setPosition(position);
 
-					
-					new CRUD_Dao().CreateAccount(account);
-					showMessage("Staff saved successfully.");
-				} catch (Exception ex) {
-					showMessage("Error saving staff: " + ex.getMessage());
+					try {
+						CRUD_Dao dao = new CRUD_Dao(); // Assuming you have a StaffDAO class for database operations
+						int id = dao.addStaff(staff); // Save the staff to the database
+						Account account = new Account();
+						account.setPassword(password);
+						account.setUsername(username);
+						account.setStaffID(id);
+
+						new CRUD_Dao().CreateAccount(account);
+						showMessage("Staff saved successfully.");
+					} catch (Exception ex) {
+						showMessage("Error saving staff: " + ex.getMessage());
+					}
 				}
 			}
-			}	
-			
+
 		});
-		
+
 		btnSave.setIcon(new ImageIcon(Staff_Manage.class.getResource("/Image/save.png")));
 		btnSave.setBackground(new Color(50, 205, 50));
 		btnSave.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
@@ -685,39 +668,37 @@ public class Staff_Manage extends JFrame {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				 staff = (StaffTableModel) table.getModel();
-			        int selectedRow = table.getSelectedRow();
+				staff = (StaffTableModel) table.getModel();
+				int selectedRow = table.getSelectedRow();
 
-			        if (selectedRow != -1) {
-			            int id = (int) staff.getValueAt(selectedRow, 0); 
-			            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this record?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-			            
-			            if (confirm == JOptionPane.YES_OPTION) {
-			                try {
-			                    
-			                  new CRUD_Dao().deleteStaffById(id);
-			                    
-			                    
-			                  staff.removeRow(selectedRow);
-			                    
-			                    JOptionPane.showMessageDialog(null, "Record deleted successfully.");
-			                } catch (SQLException ex) {
-			                    ex.printStackTrace();
-			                    JOptionPane.showMessageDialog(null, "Failed to delete the record. Please try again.");
-			                }
-			            }
-			        } else {
-			            if (table.getRowCount() == 0) {
-			                JOptionPane.showMessageDialog(null, "Table is empty!");
-			            } else {
-			                JOptionPane.showMessageDialog(null, "Please select a row for deletion.");
-			            }
-			        }
-			        
-			        Clear(); 
-				
-			
-			
+				if (selectedRow != -1) {
+					int id = (int) staff.getValueAt(selectedRow, 0);
+					int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this record?",
+							"Confirm Delete", JOptionPane.YES_NO_OPTION);
+
+					if (confirm == JOptionPane.YES_OPTION) {
+						try {
+
+							new CRUD_Dao().deleteStaffById(id);
+
+							staff.removeRow(selectedRow);
+
+							JOptionPane.showMessageDialog(null, "Record deleted successfully.");
+						} catch (SQLException ex) {
+							ex.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Failed to delete the record. Please try again.");
+						}
+					}
+				} else {
+					if (table.getRowCount() == 0) {
+						JOptionPane.showMessageDialog(null, "Table is empty!");
+					} else {
+						JOptionPane.showMessageDialog(null, "Please select a row for deletion.");
+					}
+				}
+
+				Clear();
+
 			}
 		});
 		btnDelete.addMouseListener(new MouseAdapter() {
@@ -743,11 +724,7 @@ public class Staff_Manage extends JFrame {
 
 				contentPane.removeAll();
 
-				 new Edit_Staff(s).setVisible(true);;
-//				contentPane.add(editStaffPanel);
-//
-//				contentPane.repaint();
-//				contentPane.revalidate();
+				new Edit_Staff(s).setVisible(true);
 
 				int selectedRow = table.getSelectedRow();
 				if (selectedRow != -1) {
@@ -755,48 +732,29 @@ public class Staff_Manage extends JFrame {
 					int id = (int) table.getValueAt(selectedRow, 0);
 					String name = txtName.getText().trim();
 					String gender = rdoMale.isSelected() ? "Male" : rdoFemale.isSelected() ? "Female" : "";
-					Object comboBox1SelectedItem = comboBox1.getSelectedItem();
-				    Object comboBox2SelectedItem = comboBox2.getSelectedItem();
-				    
-				    // Check if the selected item is not null before calling toString()
-				    String comboBox1Value = (comboBox1SelectedItem != null) ? comboBox1SelectedItem.toString() : "";
-				    String comboBox2Value = (comboBox2SelectedItem != null) ? comboBox2SelectedItem.toString() : "";
 
-				    String nrc = comboBox2Value + comboBox1Value + txtn.getText().trim() + txtNrc.getText().trim();
-//					String nrc = comboBox2.getSelectedItem().toString() + comboBox1.getSelectedItem().toString()
-//							+ txtNrc.getText().trim();
-					//Date dob = (Date) chooserDob.getDate();
-					java.util.Date utilDate = Dob.getDate();  // Get date from JDateChooser
-				    if (utilDate != null) {
-				        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());  // Convert to java.sql.Date if needed
-				        System.out.println("Date of Birth: " + sqlDate);
-				    } else {
-				        System.out.println("No date selected.");
-				    }
+					String nrc = comboBox2.getSelectedItem().toString() + comboBox1.getSelectedItem().toString() + "("
+							+ txtn.getText().trim() + ")" + txtNrc.getText().trim();
+					// Date dob = (Date) chooserDob.getDate();
+					java.util.Date utilDate = Dob.getDate(); // Get date from JDateChooser
+					if (utilDate != null) {
+						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime()); // Convert to java.sql.Date if
+																						// needed
+						System.out.println("Date of Birth: " + sqlDate);
+					} else {
+						System.out.println("No date selected.");
+					}
 					String phoneNumber = txtPhno.getText().trim();
 					String address = txtAddress.getText().trim();
 					String email = txtEmail.getText().trim();
 					String password = txtpassword.getText().trim();
-					
-					String position = cboPosition.getSelectedItem().toString().trim();
-					
-					
-					Pattern pattern = Pattern.compile("(\\d{1,2})/(\\w+)(\\(N\\))(\\d{6})");
-					Matcher matcher = pattern.matcher(nrc);
 
-					if (matcher.matches()) {
-					    comboBox2.setSelectedItem(matcher.group(1) + "/");  // Set the first part (e.g., "12/")
-					    comboBox1.setSelectedItem(matcher.group(2));        // Set the second part (e.g., "ABC")
-					    txtn.setText(matcher.group(3).replaceAll("[()]", "")); // Set the third part, without parentheses (e.g., "N")
-					    txtNrc.setText(matcher.group(4));                  // Set the fourth part (e.g., "123456")
-					} else {
-					    // Handle the case where the NRC format does not match
-					    System.out.println("NRC format does not match: " + nrc);
-					}
+					String position = cboPosition.getSelectedItem().toString().trim();
 
 					// Set product data in the edit panel
 					Edit_Staff editStaffFrame = new Edit_Staff(s);
-					editStaffFrame.populateStaffDetails(name, utilDate, nrc, gender, phoneNumber, address, email, position);
+					editStaffFrame.populateStaffDetails(name, utilDate, nrc, gender, phoneNumber, address, email,
+							position);
 					editStaffFrame.setVisible(true);
 
 				}
@@ -812,77 +770,59 @@ public class Staff_Manage extends JFrame {
 		contentPane.add(btnEdit);
 
 		JButton btnView = new JButton("View");
-		btnView.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					new View_Customer(s).setVisible(true);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				dispose();
-			}
-		});
 		btnView.setForeground(new Color(0, 0, 0));
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				try {
-				contentPane.removeAll();
-				
-		        
-				View_ManageStaff viewProductPanel = null;
-		        viewProductPanel = new View_ManageStaff(s);
-				contentPane.add(viewProductPanel);
-				contentPane.add(viewProductPanel,BorderLayout.CENTER);
-		        
-				java.util.Date utilDate = Dob.getDate();  // Get date from JDateChooser
-			    if (utilDate != null) {
-			        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());  // Convert to java.sql.Date if needed
-			        System.out.println("Date of Birth: " + sqlDate);
-			    } else {
-			        System.out.println("No date selected.");
-			    }
-//				viewProductPanel.setSize(580,620);
-				setSize(527,738);
-				
-				viewProductPanel.setLocation(0,0);
-		        contentPane.repaint();
-		        contentPane.revalidate();
-		        
-		        new Product_Manage(s).setVisible(false);
-		        
-		        int selectedRow = table.getSelectedRow();
-				if(selectedRow != -1 ) {
-					
-					int id = (int) table.getValueAt(selectedRow, 0);
-					String name=txtName.getText().trim();
-					
-				       // panel.add(cboSize);
-				        String address=txtAddress.getText().toString();
-				         String position = cboPosition.getSelectedItem().toString();
-				         String nrc=txtNrc.getText().toString();
-		                String email = txtEmail.getText().trim();
-		                String phone = txtPhno.getText().trim();
-		                String gender = "";
-				        if ("Male".equals(gender)) {
-				            rdoMale.setSelected(true);
-				        } else if ("Female".equals(gender)) {
-				            rdoFemale.setSelected(true);
-				        }
+					contentPane.removeAll();
+
+					setSize(527, 738);
+
+					int selectedRow = table.getSelectedRow();
+					if (selectedRow != -1) {
+
+						java.util.Date utilDate = Dob.getDate(); // Get date from JDateChooser
+						if (utilDate != null) {
+							java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime()); // Convert to java.sql.Date if
+																							// needed
+							System.out.println("Date of Birth: " + sqlDate);
+						} else {
+							System.out.println("No date selected.");
+						}
+						
+						int id = (int) table.getValueAt(selectedRow, 0);
+						String name = txtName.getText().trim();
+
+						// panel.add(cboSize);
+						String address = txtAddress.getText().toString();
+						String position = cboPosition.getSelectedItem().toString();
+						String nrc = comboBox2.getSelectedItem().toString() + comboBox1.getSelectedItem().toString() + "("
+								+ txtn.getText().trim() + ")" + txtNrc.getText().trim();
+						String email = txtEmail.getText().trim();
+						String phone = txtPhno.getText().trim();
+						String gender = "";
+						if ("Male".equals(gender)) {
+							rdoMale.setSelected(true);
+						} else if ("Female".equals(gender)) {
+							rdoFemale.setSelected(true);
+						}
 
 //	              
-	                viewProductPanel.populateStaffDetails(name,utilDate, email,gender, phone, nrc, position, address);
-		                
-	            }
-	        
-	        } catch (Exception ex) {
-	            ex.printStackTrace();
-	            JOptionPane.showMessageDialog(null, "An error occurred while processing the data.");
-	        }
+						View_ManageStaff editStaffFrame = new View_ManageStaff(s);
+						editStaffFrame.populateStaffDetails(name, utilDate, email, gender, phone, nrc,
+								position, address);
+						editStaffFrame.setVisible(true);
+
+					}
+
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, "An error occurred while processing the data.");
+				}
+				dispose();
 			}
-			
+
 		});
 
 		btnView.setIcon(new ImageIcon(Staff_Manage.class.getResource("/image/view-grid-detail.png")));
@@ -919,29 +859,29 @@ public class Staff_Manage extends JFrame {
 		txtUsername.setColumns(10);
 		txtUsername.setBounds(174, 511, 290, 26);
 		contentPane.add(txtUsername);
-		
+
 		JCheckBox chckbxShow = new JCheckBox("Show Password");
 		chckbxShow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (chckbxShow.isSelected()) {
-		            // Show all password fields
-		            txtconfirm.setEchoChar((char) 0);
-		           
-		            txtpassword.setEchoChar((char) 0);
-		        } else {
-		            // Hide all password fields (set to default echo char for password fields)
-		        	txtconfirm.setEchoChar('*');
-		           
-		        	txtpassword.setEchoChar('*');
-		        }
+					// Show all password fields
+					txtconfirm.setEchoChar((char) 0);
+
+					txtpassword.setEchoChar((char) 0);
+				} else {
+					// Hide all password fields (set to default echo char for password fields)
+					txtconfirm.setEchoChar('*');
+
+					txtpassword.setEchoChar('*');
+				}
 			}
 		});
 		chckbxShow.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		chckbxShow.setBackground(UIManager.getColor("Button.light"));
 		chckbxShow.setBounds(327, 617, 137, 28);
 		contentPane.add(chckbxShow);
-		
+
 		JLabel lblSearchHere = new JLabel("Search Here :");
 		lblSearchHere.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		lblSearchHere.setBounds(893, 149, 107, 28);
@@ -949,248 +889,239 @@ public class Staff_Manage extends JFrame {
 
 	}
 
-	
-	public boolean checkInput(){
-	    if( checkAddress() &checkGender()& checkPassword()&checkEmail()& checkConfirm() & checkAddress1() & checkNRCNO() & checkNRC() & checkPositoin() & checkAddress() ){  return true;}
-	    else return false;
-	  }
-	  
-	  
-	  
-	  
-	  public boolean checkNRCNO(){
-	    if(txtNrc.getText().isEmpty() || !(Pattern.matches("\\d{6}",txtNrc.getText().toString().trim()))){
-	      txtNrc.setForeground(Color.RED);
-	      txtNrc.setBorder(new LineBorder(Color.RED));
-	      txtNrc.setText("");
-	      txtNrc.requestFocus();
-	      return false;
-	    }else{
-	      txtNrc.setForeground(Color.BLACK);
-	      txtNrc.setBorder(new LineBorder(Color.BLACK));
-	      return true;
-	    }
-	  }
-	  
-	  
-	  public boolean checkPositoin(){
-	    if(cboPosition.getSelectedIndex()==0){
-	      lblPosition.setForeground(Color.RED);
-	      cboPosition.setBorder(new LineBorder(Color.RED));
-	      return false;
-	    }else{
-	      lblPosition.setForeground(Color.BLACK);
-	      cboPosition.setBorder(new LineBorder(Color.BLACK));
-	      return true;
-	    }
-	  }
-	  
-	  public boolean checkPassword() {
-	    lblPassword.setVisible(false);
-	    if(txtpassword.getText().trim().isEmpty()) {
-	      lblPassword.setVisible(true);
-	      lblPassword.setText("*");
-	      return false;
-	    }
-	    if(txtpassword.getText().length()>=8) {
-	      return true;
-	    }
-	    else {
-	      lblPassword.setVisible(true);
-	      lblPassword.setText("Enter 8 character");
-	      return false;
-	    }
-	  }
-	  
-	  public boolean checkConfirm() {
-	    lblConfirmpsw.setVisible(false);
-	    if(txtconfirm.getText().trim().isEmpty()) {
-	      lblConfirmpsw.setVisible(true);
-	      lblConfirmpsw.setText("*");
-	      return false;
-	    }
-	    if(txtconfirm.getText().equals(txtpassword.getText())) {
-	      return true;
-	      
-	    }
-	    else {
-	      lblConfirmpsw.setVisible(true);
-	      lblConfirmpsw.setText("Enter 8 character and same pervious password");
-	      return false;
-	    }
-	  }
-	  
-	  public boolean checkNRC(){
-	    if(comboBox2.getSelectedIndex()==0){
-	  lblNrc.setForeground(Color.RED);
-	      comboBox2.setBorder(new LineBorder(Color.RED));
-	      comboBox1.setBorder(new LineBorder(Color.RED));
-	//    
-	      return false;
-	    }else{
-	      lblNrc.setForeground(Color.BLACK);
-	      comboBox2.setBorder(new LineBorder(Color.BLACK));
-	      comboBox1.setBorder(new LineBorder(Color.BLACK));
-	      txtNrc.setBorder(new LineBorder(Color.BLACK));
-	      return true;
-	    }
-	  }
-	  
-	  public boolean checkAddress1(){
-	    if(txtAddress.getText().isEmpty()){
-	      //label_9.setForeground(Color.RED);
-	      txtAddress.setBorder(new LineBorder(Color.RED));
-	      txtAddress.setText("");
-	      txtAddress.requestFocus();
-	      return false;
-	    }else{
-	      //label_9.setForeground(Color.BLACK);
-	      txtAddress.setBorder(new LineBorder(Color.BLACK));
-	      return true;
-	    }
-	  }
-	  
-	  public static boolean checkName(String name) {
-	    // Check if the name starts with a letter, ends with a letter, and contains only
-	    // valid characters
-	    return name != null && !name.trim().isEmpty() // Ensure the name is not empty or just whitespace
-	        && name.matches("[a-zA-Z][a-zA-Z0-9]*( [a-zA-Z0-9]+)*"); // Name must start with a letter, and can be
-	                                      // followed by letters, numbers, and single
-	                                      // spaces
-	  }
+	public boolean checkInput() {
+		if (checkAddress() & checkGender() & checkPassword() & checkEmail() & checkConfirm() & checkAddress1()
+				& checkNRCNO() & checkNRC() & checkPositoin() & checkAddress()) {
+			return true;
+		} else
+			return false;
+	}
 
-	  public static boolean validatePhoneNumber(String phoneNumber) {
-	    // Remove all non-digit characters except for leading '+'
-	    String cleanedNumber = phoneNumber.replaceAll("[^\\d+]", "");
+	public boolean checkNRCNO() {
+		if (txtNrc.getText().isEmpty() || !(Pattern.matches("\\d{6}", txtNrc.getText().toString().trim()))) {
+			txtNrc.setForeground(Color.RED);
+			txtNrc.setBorder(new LineBorder(Color.RED));
+			txtNrc.setText("");
+			txtNrc.requestFocus();
+			return false;
+		} else {
+			txtNrc.setForeground(Color.BLACK);
+			txtNrc.setBorder(new LineBorder(Color.BLACK));
+			return true;
+		}
+	}
 
-	    // Check for phone number with country code
-	    if (cleanedNumber.matches("\\+95[0-9]{9,10}")) {
-	      return true; // Valid Myanmar number with country code
-	    }
+	public boolean checkPositoin() {
+		if (cboPosition.getSelectedIndex() == 0) {
+			lblPosition.setForeground(Color.RED);
+			cboPosition.setBorder(new LineBorder(Color.RED));
+			return false;
+		} else {
+			lblPosition.setForeground(Color.BLACK);
+			cboPosition.setBorder(new LineBorder(Color.BLACK));
+			return true;
+		}
+	}
 
-	    // Check for phone number without country code
-	    if (cleanedNumber.matches("09[0-9]{9}")) {
-	      return true; // Valid Myanmar mobile number without country code
-	    }
+	public boolean checkPassword() {
+		lblPassword.setVisible(false);
+		if (txtpassword.getText().trim().isEmpty()) {
+			lblPassword.setVisible(true);
+			lblPassword.setText("*");
+			return false;
+		}
+		if (txtpassword.getText().length() >= 8) {
+			return true;
+		} else {
+			lblPassword.setVisible(true);
+			lblPassword.setText("Enter 8 character");
+			return false;
+		}
+	}
 
-	    // Check for landline numbers (e.g., 01XXXXXXXX or 0XYYYYYYYY)
-	    if (cleanedNumber.matches("0[1-9][0-9]{7,8}")) {
-	      return true; // Valid Myanmar landline number
-	    }
-	    
-	    return false; // Invalid phone number
-	  }
-	  
-	  public boolean checkEmail(){
-	    if(txtName.getText().isEmpty()){
-	      lblEmail.setForeground(Color.RED);
-	      txtEmail.setBorder(new LineBorder(Color.RED));
-	      txtEmail.setText("");
-	      txtEmail.requestFocus();
-	      return false;
-	    }else{
-	      if(Pattern.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", txtEmail.getText().trim()))
-	      {
-	      return true;
-	      }
-	    
-	      lblEmail.setForeground(Color.BLACK);
-	      
-	      txtEmail.setBorder(new LineBorder(Color.BLACK));
-	      return true;
-	    }
-	    
-	  }
+	public boolean checkConfirm() {
+		lblConfirmpsw.setVisible(false);
+		if (txtconfirm.getText().trim().isEmpty()) {
+			lblConfirmpsw.setVisible(true);
+			lblConfirmpsw.setText("*");
+			return false;
+		}
+		if (txtconfirm.getText().equals(txtpassword.getText())) {
+			return true;
 
-	  public static boolean validateEmail(String email) {
-	    // Regular expression for validating email addresses
-	    String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+		} else {
+			lblConfirmpsw.setVisible(true);
+			lblConfirmpsw.setText("Enter 8 character and same pervious password");
+			return false;
+		}
+	}
 
-	    // Check if the email matches the regex
-	    return email != null && email.matches(emailRegex);
-	  }
-	  
-	  
+	public boolean checkNRC() {
+		if (comboBox2.getSelectedIndex() == 0) {
+			lblNrc.setForeground(Color.RED);
+			comboBox2.setBorder(new LineBorder(Color.RED));
+			comboBox1.setBorder(new LineBorder(Color.RED));
+			//
+			return false;
+		} else {
+			lblNrc.setForeground(Color.BLACK);
+			comboBox2.setBorder(new LineBorder(Color.BLACK));
+			comboBox1.setBorder(new LineBorder(Color.BLACK));
+			txtNrc.setBorder(new LineBorder(Color.BLACK));
+			return true;
+		}
+	}
 
-	  private void showMessage(String message) {
-	    JOptionPane.showMessageDialog(this, message);
-	  }
+	public boolean checkAddress1() {
+		if (txtAddress.getText().isEmpty()) {
+			// label_9.setForeground(Color.RED);
+			txtAddress.setBorder(new LineBorder(Color.RED));
+			txtAddress.setText("");
+			txtAddress.requestFocus();
+			return false;
+		} else {
+			// label_9.setForeground(Color.BLACK);
+			txtAddress.setBorder(new LineBorder(Color.BLACK));
+			return true;
+		}
+	}
 
-	  public boolean checkAddress() {
-	    if (txtAddress.getText().isEmpty()) {
-	      lblAddress.setForeground(Color.RED);
-	      txtAddress.setBorder(new LineBorder(Color.RED));
-	      txtAddress.setText("");
-	      txtAddress.requestFocus();
-	      return false;
-	    } else {
-	      lblAddress.setForeground(Color.BLACK);
-	      txtAddress.setBorder(new LineBorder(Color.BLACK));
-	      return true;
-	    }
-	  }
+	public static boolean checkName(String name) {
+		// Check if the name starts with a letter, ends with a letter, and contains only
+		// valid characters
+		return name != null && !name.trim().isEmpty() // Ensure the name is not empty or just whitespace
+				&& name.matches("[a-zA-Z][a-zA-Z0-9]*( [a-zA-Z0-9]+)*"); // Name must start with a letter, and can be
+		// followed by letters, numbers, and single
+		// spaces
+	}
 
-	  
+	public static boolean validatePhoneNumber(String phoneNumber) {
+		// Remove all non-digit characters except for leading '+'
+		String cleanedNumber = phoneNumber.replaceAll("[^\\d+]", "");
 
-	  public void Clear() {
-	    txtName.setText("");
-	    Dob.setDate(null);
-	    comboBox2.setSelectedIndex(-1);
-	    comboBox1.setSelectedIndex(-1);
-	    txtNrc.setText("");
-	    btnGender.clearSelection();
-	    txtPhno.setText("");
-	    txtAddress.setText("");
-	    txtEmail.setText("");
-	    txtUsername.setText("");
-	    cboPosition.setSelectedItem("");
-	    txtpassword.setText("");
-	    txtconfirm.setText("");
-	  }
+		// Check for phone number with country code
+		if (cleanedNumber.matches("\\+95[0-9]{9,10}")) {
+			return true; // Valid Myanmar number with country code
+		}
 
-	  public void populateStaffDetails(String name, Date dob, String nrc, String gender, String phno, String address,
-	      String email, String position) {
+		// Check for phone number without country code
+		if (cleanedNumber.matches("09[0-9]{9}")) {
+			return true; // Valid Myanmar mobile number without country code
+		}
 
-	    String itemValue = "ItemValue"; // The value you want to select
-	    comboBox2.setSelectedItem(itemValue); // This selects the item with the specified value
+		// Check for landline numbers (e.g., 01XXXXXXXX or 0XYYYYYYYY)
+		if (cleanedNumber.matches("0[1-9][0-9]{7,8}")) {
+			return true; // Valid Myanmar landline number
+		}
 
-	    String itemValue2 = "ItemValue"; // The value you want to select
-	    comboBox1.setSelectedItem(itemValue2); // This selects the item with the specified value
+		return false; // Invalid phone number
+	}
 
-	    txtName.setText(name);
-	    Dob.setDate(dob);
-	    txtNrc.setText(nrc);
-	    if ("Male".equalsIgnoreCase(gender)) {
-	      rdoMale.setSelected(true);
-	    } else if ("Female".equalsIgnoreCase(gender)) {
-	      rdoFemale.setSelected(true);
-	    } else {
-	      // Handle case for invalid or no gender if necessary
-	      btnGender.clearSelection();
-	    }
-	    txtPhno.setText("");
-	    txtAddress.setText("");
-	    txtEmail.setText("");
-	    cboPosition.setSelectedItem("");
+	public boolean checkEmail() {
+		if (txtName.getText().isEmpty()) {
+			lblEmail.setForeground(Color.RED);
+			txtEmail.setBorder(new LineBorder(Color.RED));
+			txtEmail.setText("");
+			txtEmail.requestFocus();
+			return false;
+		} else {
+			if (Pattern.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", txtEmail.getText().trim())) {
+				return true;
+			}
 
-	  }
-	  
-	  public boolean checkGender(){
-	    if(btnGender.isSelected(null)){
-	      lblGender.setForeground(Color.RED);
-	      return false;
-	    }else{
-	      lblGender.setForeground(Color.BLACK);
-	      return true;
-	    }
-	  }
+			lblEmail.setForeground(Color.BLACK);
 
-	  public void selectGender(String gender) {
-	    if ("Male".equalsIgnoreCase(gender)) {
-	      rdoMale.setSelected(true);
-	    } else if ("Female".equalsIgnoreCase(gender)) {
-	      rdoFemale.setSelected(true);
-	    }
-	    // Handle other cases if necessary
-	  }
+			txtEmail.setBorder(new LineBorder(Color.BLACK));
+			return true;
+		}
+
+	}
+
+	public static boolean validateEmail(String email) {
+		// Regular expression for validating email addresses
+		String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+
+		// Check if the email matches the regex
+		return email != null && email.matches(emailRegex);
+	}
+
+	private void showMessage(String message) {
+		JOptionPane.showMessageDialog(this, message);
+	}
+
+	public boolean checkAddress() {
+		if (txtAddress.getText().isEmpty()) {
+			lblAddress.setForeground(Color.RED);
+			txtAddress.setBorder(new LineBorder(Color.RED));
+			txtAddress.setText("");
+			txtAddress.requestFocus();
+			return false;
+		} else {
+			lblAddress.setForeground(Color.BLACK);
+			txtAddress.setBorder(new LineBorder(Color.BLACK));
+			return true;
+		}
+	}
+
+	public void Clear() {
+		txtName.setText("");
+		Dob.setDate(null);
+		comboBox2.setSelectedIndex(-1);
+		comboBox1.setSelectedIndex(-1);
+		txtNrc.setText("");
+		btnGender.clearSelection();
+		txtPhno.setText("");
+		txtAddress.setText("");
+		txtEmail.setText("");
+		txtUsername.setText("");
+		cboPosition.setSelectedItem("");
+		txtpassword.setText("");
+		txtconfirm.setText("");
+	}
+
+	public void populateStaffDetails(String name, Date dob, String nrc, String gender, String phno, String address,
+			String email, String position) {
+
+		String itemValue = "ItemValue"; // The value you want to select
+		comboBox2.setSelectedItem(itemValue); // This selects the item with the specified value
+
+		String itemValue2 = "ItemValue"; // The value you want to select
+		comboBox1.setSelectedItem(itemValue2); // This selects the item with the specified value
+
+		txtName.setText(name);
+		Dob.setDate(dob);
+		txtNrc.setText(nrc);
+		if ("Male".equalsIgnoreCase(gender)) {
+			rdoMale.setSelected(true);
+		} else if ("Female".equalsIgnoreCase(gender)) {
+			rdoFemale.setSelected(true);
+		} else {
+			// Handle case for invalid or no gender if necessary
+			btnGender.clearSelection();
+		}
+		txtPhno.setText("");
+		txtAddress.setText("");
+		txtEmail.setText("");
+		cboPosition.setSelectedItem("");
+
+	}
+
+	public boolean checkGender() {
+		if (btnGender.isSelected(null)) {
+			lblGender.setForeground(Color.RED);
+			return false;
+		} else {
+			lblGender.setForeground(Color.BLACK);
+			return true;
+		}
+	}
+
+	public void selectGender(String gender) {
+		if ("Male".equalsIgnoreCase(gender)) {
+			rdoMale.setSelected(true);
+		} else if ("Female".equalsIgnoreCase(gender)) {
+			rdoFemale.setSelected(true);
+		}
+		// Handle other cases if necessary
+	}
 }

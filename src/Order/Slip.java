@@ -149,13 +149,13 @@ public class Slip extends JPanel {
 		
 		JLabel lblNetPayment = new JLabel("Net Payment  :");
 		lblNetPayment.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
-		lblNetPayment.setBounds(272, 488, 127, 30);
+		lblNetPayment.setBounds(284, 486, 127, 30);
 		add(lblNetPayment);
 		
 		 lblnetpayment = new JLabel("");
 		lblnetpayment.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblnetpayment.setFont(new Font("Mongolian Baiti", Font.BOLD, 17));
-		lblnetpayment.setBounds(386, 486, 143, 30);
+		lblnetpayment.setBounds(397, 486, 143, 30);
 		add(lblnetpayment);
 		
 		JLabel lblDate = new JLabel("Date            :");

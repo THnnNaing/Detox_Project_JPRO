@@ -25,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Admin.Admin_Dashboard;
+import Admin.Staff_Dashboard;
 import Dao.CRUD_Dao;
 import Constructors.Customer;
 import Constructors.CustomerTableModel;
@@ -119,7 +120,7 @@ public class View_Customer extends JFrame {
 		
 		
 		table.setForeground(new Color(0, 0, 0));
-		table.setFont(new Font("Mongolian Baiti", Font.BOLD, 20));
+		table.setFont(new Font("Mongolian Baiti", Font.PLAIN, 17));
 		
 		
 		
@@ -199,11 +200,12 @@ public class View_Customer extends JFrame {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new Admin_Dashboard(s).setVisible(true);
+					new Staff_Dashboard(s).setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				dispose();
 			}
 		});
 		//btnBack.setIcon(new ImageIcon(View_Customer.class.getResource("/image/image/back.png")));
@@ -213,4 +215,3 @@ public class View_Customer extends JFrame {
 		contentPane.add(btnBack);
 	}
 }
-	

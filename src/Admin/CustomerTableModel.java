@@ -11,7 +11,7 @@ import Constructors.Customer;
 public class CustomerTableModel extends AbstractTableModel  {
 	
 	
-String title[]= {"No.","Name","Gender","Phone NO","Email"};
+String title[]= {"ID","Name","Gender","Phone NO","Email"};
 	
 	ArrayList<Customer>data =new ArrayList<Customer>();
 	public CustomerTableModel(ArrayList<Customer>cus) {
